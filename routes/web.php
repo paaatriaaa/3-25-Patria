@@ -35,9 +35,17 @@ Route::get('/about', function () {
         "gambar" => "pat.jpg",
     ]);
 });
+Route::resource('/contacts', ContactController::class);
+use App\Http\Controllers\ContactController;
 
 Route::get('/gallery', function () {
-    return viwe('gallery',[
+    return view('gallery',[
         "title" => "Gallery"
+    ]);
+});
+
+Route::get('/contacts', function () {
+    return view('contacts',[
+        "title" => "Contacts"
     ]);
 });
