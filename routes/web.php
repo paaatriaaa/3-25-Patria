@@ -22,13 +22,22 @@ Route::get('/about', function () {
 });
 
 Route::get('/', function () {
-    return view('Home');
+    return view('home',[
+        "title" => "Home"
+    ]);
 });
 
 Route::get('/about', function () {
-    return view('About');
+    return view('about', [
+        "title" => "About",
+        "nama" => "Patria Nugrahadi",
+        "email" => "patrianugrahadi@gmail.com",
+        "gambar" => "pat.jpg",
+    ]);
 });
 
-Route::get('/galery', function () {
-    return viwe('   Gallery');
+Route::get('/gallery', function () {
+    return viwe('gallery',[
+        "title" => "Gallery"
+    ]);
 });
