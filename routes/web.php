@@ -14,32 +14,34 @@ use App\Http\Controllers\ContactController;
 |
 */
 
-
-
 Route::get('/', function () {
-    return view('index',[
+    return view('index', [
         "title" => "Beranda"
     ]);
 });
-
 Route::get('/about', function () {
     return view('about', [
         "title" => "About",
         "nama" => "Patria Nugrahadi",
-        "email" => "patrianugrahadi@gmail.com",
-        "gambar" => "Saya.jpg",
+        "email" => "3103120174@student.smktelkom-pwt.sch.id",
+        "gambar" => "Saya.jpg"
     ]);
 });
-Route::resource('/contacts', ContactController::class);
-
 Route::get('/gallery', function () {
-    return view('gallery',[
+    return view('gallery', [
         "title" => "Gallery"
     ]);
 });
+// Route::resource('/contact', ContactController::class);
+route::get('contact/create', [ContactController::class, 'create'])->name('contact.create');
+route::post('contact/store', [ContactController::class, 'store'])->name('contact.store');
+
 
 Auth::routes();
-
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
+    route::get('contact/{id}/edit', [ContactController::class, 'edit'])->name('contact.edit');
+    route::post('contact/{id}/update', [ContactController::class, 'update'])->name('contact.update');
+    route::get('contact/{id}/destroy', [ContactController::class, 'destroy'])->name('contact.destroy');
 });

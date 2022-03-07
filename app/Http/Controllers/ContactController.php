@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Contact;
+use App\Models\contacts;
 
-class ContactController extends Controller
+class contactsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('contacts', [
-            "title" => "Contacts"
-        ]);
+        $contactss = contacts::paginate(10);
+        return view('admin/contacts/index', compact('contacts'));
     }
 
     /**
@@ -26,7 +25,9 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        return view('contacts', [
+            "title" => "contacts"
+        ]);
     }
 
     /**
@@ -37,11 +38,10 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        $contact = Contact::create($request->all());
-        $contact->save();
-
-        return redirect('contacts');
+        // dd($request->all());
+        $contacts = contacts::create($request->all());
+        $contacts->save();
+        return redirect()->route('contacts.create')->with('status', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -63,7 +63,8 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contacts = contacts::findOrFail($id);
+        return view('admin/contacts/edit', compact('contacts'));
     }
 
     /**
@@ -75,7 +76,10 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contacts = contacts::findOrFail($id);
+        $contacts->update($request->all());
+        $contacts->save();
+        return redirect()->route('contacts.index');
     }
 
     /**
@@ -86,6 +90,8 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contacts = contacts::findOrFail($id);
+        $contacts->delete();
+        return redirect()->route('contacts.index');
     }
 }
